@@ -1,0 +1,19 @@
+//The approach is simple that how much MAximum i can Reach and this can be calculated by i + nums[i];
+//and If nums array do not consist of 0 this we will always reach the End;
+
+class Solution {
+public:
+    bool canJump(vector<int>& nums) {
+        int maxIndex = 0;
+
+        for(int i = 0; i < nums.size() ; i++){
+            if(i > maxIndex){
+                return false;
+            }
+
+            maxIndex = max(maxIndex , i + nums[i]);
+        }
+
+        return true;
+    }
+};
