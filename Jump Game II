@@ -1,0 +1,45 @@
+//Recursive Approach
+int solve(vector<int> &nums , int index , int jumps){
+        if(index >= nums.size() - 1){
+            return jumps;
+        }
+
+        int mini = INT_MAX;
+
+        for(int i = 1 ; i <= nums[index] ; i++){
+            mini = min(mini , solve(nums , index + i , jumps + 1));
+        }
+
+        return mini;
+    }
+    int jump(vector<int>& nums) {
+        
+        int jumps = solve(nums , 0 , 0);
+
+        return jumps;
+    }
+
+//Optimal Solution
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+        int jumps = 0;
+
+        int r = 0;
+        int l = 0;
+
+        while(r < nums.size() - 1){
+            int farthest = 0;
+
+            for(int i = l ; i <= r ; i++){
+                farthest = max(farthest , nums[i] + i);
+            }
+
+            l = r + 1;
+            r = farthest;
+            jumps++;
+        }
+
+        return jumps;
+    }
+};
