@@ -1,0 +1,32 @@
+class Solution {
+  public:
+    double fractionalKnapsack(vector<int>& val, vector<int>& wt, int capacity) {
+        int n = val.size();
+        vector<pair<double, int>> vpw; // (value/weight, index)
+
+        for (int i = 0; i < n; i++) {
+            double perWeight = (double)val[i] / wt[i];
+            vpw.push_back({perWeight, i});
+        }
+
+        // Sort by value/weight in decreasing order
+        sort(vpw.begin(), vpw.end(), [](const auto &a, const auto &b) {
+            return a.first > b.first;
+        });
+
+        double maxProfit = 0.0;
+
+        for (int i = 0; i < n && capacity > 0; i++) {
+            int idx = vpw[i].second;
+            if (wt[idx] <= capacity) {
+                maxProfit += val[idx];
+                capacity -= wt[idx];
+            } else {
+                maxProfit += val[idx] * ((double)capacity / wt[idx]);
+                capacity = 0;
+            }
+        }
+
+        return maxProfit;
+    }
+};
